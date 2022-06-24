@@ -3,13 +3,13 @@ pipeline{
 
     stages{
         stage("Git"){
-            step{
+            steps{
                 git 'https://github.com/prankbox/pybot'
             }
         }
 
         stage("Check"){
-            step{
+            steps{
                 sh 'ls -lah'
             }
         }
