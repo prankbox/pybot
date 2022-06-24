@@ -8,9 +8,10 @@ pipeline{
             }
         }
 
-        stage("Check"){
+        stage("Build"){
             steps{
-                sh 'ls -lah'
+                sh 'docker build -t bot:$BUILD_TAG .'
+                sh 'docker images'
             }
         }
     }
