@@ -19,7 +19,12 @@ pipeline{
 
         stage("Push"){
             steps{
-                withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {
+                withCredentials([[
+                $class: 'AmazonWebServicesCredentialsBinding',
+                credentialsId: "aws-jenkins",
+                accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+            ]]) {
                 sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 006104586502.dkr.ecr.us-east-1.amazonaws.com/bot'
             }
                 
