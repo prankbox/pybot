@@ -49,13 +49,13 @@ pipeline{
                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
             ]]) {
-                sh 'aws iam create-role --role-name $ROLE_NAME --assume-role-policy-document \'{"Version": "2012-10-17","Statement": [{ "Effect": "Allow", "Principal": {"Service": "lambda.amazonaws.com"}, "Action": "sts:AssumeRole"}]}\''
-                sh 'aws iam attach-role-policy --role-name lambda-ex --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+                //sh 'aws iam create-role --role-name $ROLE_NAME --assume-role-policy-document \'{"Version": "2012-10-17","Statement": [{ "Effect": "Allow", "Principal": {"Service": "lambda.amazonaws.com"}, "Action": "sts:AssumeRole"}]}\''
+                //sh 'aws iam attach-role-policy --role-name lambda-ex --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
                 sh "aws lambda create-function \
                     --role arn:aws:iam::$AWS_ACCOUNT:role/$ROLE_NAME \
                     --function-name lambda-bot \
                     --package-type Image \
-                    --environment 'Variables={TELEGRAM_TOKEN=$TELEGRAM_BOT_KEY}' \
+                    --environment \"Variables={TELEGRAM_TOKEN=$TELEGRAM_BOT_KEY}\" \
                     --code ImageUri=$AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/bot:$BUILD_TAG"
                 }
             }
