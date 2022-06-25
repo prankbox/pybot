@@ -65,7 +65,7 @@ pipeline{
         }
         stage("Clean"){
             steps{
-                sh 'docker image rm $(docker images -q)'
+                sh 'docker image rm -f $(docker images -q) || echo true'
             }
         }
     }
