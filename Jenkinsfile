@@ -48,12 +48,12 @@ pipeline{
                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
             ]] {
-                sh 'aws lambda create-function \
+                sh "aws lambda create-function \
                     --role arn:aws:iam::$AWS_ACCOUNT:role/fn_lambda_role \
                     --function-name lambda-bot \
                     --package-type Image \
-                    --environment {TELEGRAM_TOKEN=$TELEGRAM_BOT_KEY}
-                    --code ImageUri=$AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/bot:$BUILD_TAG'
+                    --environment 'Variables={TELEGRAM_TOKEN=$TELEGRAM_BOT_KEY}' \
+                    --code ImageUri=$AWS_ACCOUNT.dkr.ecr.$REGION.amazonaws.com/bot:$BUILD_TAG"
                 }
             }
         }
