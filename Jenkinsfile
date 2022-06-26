@@ -35,6 +35,7 @@ pipeline{
                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
             ]]) {
                     sh 'aws ecr create-repository \
+                            --region "$REGION" \
                             --repository-name bot'
             }
             }
