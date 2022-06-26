@@ -1,7 +1,7 @@
 pipeline{
     agent {label 'agent1'}
     parameters {
-        booleanParam(name: "CREATE", defaultValue: true)
+        booleanParam(name: "CREATE", defaultValue: false)
         choice(name: "LAMBDA", choices: ["", "CREATE", "UPDATE"])
     }
     environment {
