@@ -67,7 +67,7 @@ pipeline{
             steps{
                 sh 'curl --output terraform.zip https://releases.hashicorp.com/terraform/1.2.3/terraform_1.2.3_linux_amd64.zip'
                 sh 'unzip terraform.zip && mv terraform /bin/ && rm terraform.zip'
-                terraform --version
+                sh 'terraform --version'
                 sh 'docker image rm -f $(docker images -q) || echo true'
             }
         }
