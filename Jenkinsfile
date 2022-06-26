@@ -1,11 +1,11 @@
 pipeline{
     agent {label 'agent1'}
     parameters {
-        
+        booleanParam(name: "CREATE", defaultValue: true)
         choice(name: "LAMBDA", choices: ["", "CREATE", "UPDATE"])
     }
     environment {
-        AWS_ACCOUNT = "795939032463"
+        AWS_ACCOUNT = "441939030227"
         REGION = "us-east-1"
         ROLE_NAME="lambda-ex"
     }
@@ -22,6 +22,21 @@ pipeline{
             steps{
                 sh 'docker build -t bot:$BUILD_TAG .'
                 sh 'docker images'
+            }
+        }
+
+        stage("CreateRepo"){
+            when { expression { params.CREATE } }
+            steps{
+                withCredentials([[
+                $class: 'AmazonWebServicesCredentialsBinding',
+                credentialsId: "aws-jenkins",
+                accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+            ]]) {
+                    sh 'aws ecr create-repository \
+                            --repository-name bot'
+            }
             }
         }
 
