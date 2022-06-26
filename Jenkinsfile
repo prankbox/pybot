@@ -1,5 +1,9 @@
 pipeline{
     agent {label 'agent1'}
+    parameters {
+        
+        choice(name: "LAMBDA", choices: ["", "CREATE", "UPDATE"])
+    }
     environment {
         AWS_ACCOUNT = "795939032463"
         REGION = "us-east-1"
