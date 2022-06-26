@@ -2,7 +2,7 @@ pipeline{
     agent {label 'agent1'}
     parameters {
         booleanParam(name: "CREATE", defaultValue: false)
-        choice(name: "LAMBDA", choices: ["", "CREATE", "UPDATE"])
+        choice(name: "LAMBDA", choices: ["CREATE", "UPDATE"])
     }
     environment {
         AWS_ACCOUNT = "441939030227"
@@ -25,20 +25,33 @@ pipeline{
             }
         }
 
-        stage("CreateRepo"){
-            when { expression { params.CREATE } }
-            steps{
-                withCredentials([[
-                $class: 'AmazonWebServicesCredentialsBinding',
-                credentialsId: "aws-jenkins",
-                accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-            ]]) {
-                    sh 'aws ecr create-repository \
-                            --region "$REGION" \
-                            --repository-name bot'
+        stage("Repo"){
+            parallel{
+                stage("Create"){
+                    when { expression { !params.CREATE } }
+                    steps{
+                        withCredentials([[
+                        $class: 'AmazonWebServicesCredentialsBinding',
+                        credentialsId: "aws-jenkins",
+                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                    ]]) {
+                            sh 'aws ecr create-repository \
+                                    --region "$REGION" \
+                                    --repository-name bot'
+                        }
+                    }
+                }{
+
+                }
+                stage("Pass"){
+                    when { expression { params.CREATE } }
+                    steps{
+                        sh 'echo "The repo exists"'
+                    }
+                }
             }
-            }
+            
         }
 
         stage("Push"){
