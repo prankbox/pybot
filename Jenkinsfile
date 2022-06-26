@@ -1,7 +1,7 @@
 pipeline{
     agent {label 'agent1'}
     environment {
-        AWS_ACCOUNT = "341672303817"
+        AWS_ACCOUNT = "795939032463"
         REGION = "us-east-1"
         ROLE_NAME="lambda-ex"
     }
