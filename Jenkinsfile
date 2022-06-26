@@ -66,8 +66,8 @@ pipeline{
         stage("Clean"){
             steps{
                 sh 'curl --output terraform.zip https://releases.hashicorp.com/terraform/1.2.3/terraform_1.2.3_linux_amd64.zip'
-                sh 'unzip terraform.zip && mv terraform /usr/local/bin/ && rm terraform.zip'
-                sh 'terraform --version'
+                sh 'unzip terraform.zip && rm terraform.zip'
+                sh './terraform --version'
                 sh 'docker image rm -f $(docker images -q) || echo true'
             }
         }
