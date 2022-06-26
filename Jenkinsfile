@@ -41,9 +41,8 @@ pipeline{
                                     --repository-name bot'
                         }
                     }
-                }{
-
                 }
+
                 stage("Pass"){
                     when { expression { params.CREATE } }
                     steps{
