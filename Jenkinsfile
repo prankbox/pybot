@@ -5,7 +5,7 @@ pipeline{
         choice(name: "LAMBDA", choices: ["CREATE", "UPDATE"])
     }
     environment {
-        AWS_ACCOUNT = "441939030227"
+        AWS_ACCOUNT = "526469428739"
         REGION = "us-east-1"
         ROLE_NAME="lambda-ex"
     }
@@ -28,7 +28,7 @@ pipeline{
         stage("Repo"){
             parallel{
                 stage("Create"){
-                    when { expression { !params.CREATE } }
+                    when { expression { params.CREATE } }
                     steps{
                         withCredentials([[
                         $class: 'AmazonWebServicesCredentialsBinding',
@@ -44,7 +44,7 @@ pipeline{
                 }
 
                 stage("Pass"){
-                    when { expression { params.CREATE } }
+                    when { expression { !params.CREATE } }
                     steps{
                         sh 'echo "The repo exists"'
                     }
