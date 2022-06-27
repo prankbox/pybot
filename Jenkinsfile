@@ -5,7 +5,7 @@ pipeline{
         choice(name: "LAMBDA", choices: ["CREATE", "UPDATE"])
     }
     environment {
-        AWS_ACCOUNT = "526469428739"
+        AWS_ACCOUNT = "793503547410"
         REGION = "us-east-1"
         ROLE_NAME="lambda-ex"
     }
