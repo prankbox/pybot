@@ -20,8 +20,7 @@ pipeline{
 
         stage("Build"){
             steps{
-                sh 'docker build -t bot:$BUILD_TAG .'
-                sh 'docker images'
+                sh './aws_build.sh'
             }
         }
 
