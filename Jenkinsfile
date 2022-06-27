@@ -72,12 +72,12 @@ pipeline{
                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
             ]]){
-                sh './aws_create_lambda_role'
+                sh './aws_create_lambda_role.sh'
             }
             }
         }
 
-        stage("Lambda"){
+        stage("CreateLambdaFunction"){
             environment { 
                 TELEGRAM_BOT_KEY = credentials('bot-token') 
             }
@@ -89,14 +89,7 @@ pipeline{
                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
             ]]) {
-                sh 
-                sh 'aws lambda create-function \
-                    --region "$REGION" \
-                    --role arn:aws:iam::"$AWS_ACCOUNT":role/"$ROLE_NAME" \
-                    --function-name lambda-bot \
-                    --package-type Image \
-                    --environment "Variables={TELEGRAM_TOKEN=$TELEGRAM_BOT_KEY}" \
-                    --code ImageUri="$AWS_ACCOUNT".dkr.ecr."$REGION".amazonaws.com/bot:"$BUILD_TAG"'
+                sh './aws_create_lambda_function.sh'
                 }
             }
         }
