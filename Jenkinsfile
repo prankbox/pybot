@@ -95,8 +95,7 @@ pipeline{
         }
         stage("Clean"){
             steps{
-                sh 'terraform --version'
-                sh 'docker image rm -f $(docker images -q) || echo true'
+                sh './clean.sh'
             }
         }
     }
