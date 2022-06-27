@@ -28,10 +28,14 @@ resource "aws_apigatewayv2_stage" "lambda" {
   }
 }
 
+data "aws_lambda_function" "existing" {
+  function_name = "lambda-bot"
+  //lambda_function_arn = var.lambda_function_arn
+}
 resource "aws_apigatewayv2_integration" "hello_world" {
   api_id = aws_apigatewayv2_api.lambda.id
 
-  integration_uri    = module.bot_lambda.lambda_function_arn
+  integration_uri    = data.aws_lambda_function.existing.invoke_arn
   integration_type   = "AWS_PROXY"
   integration_method = "POST"
 }
@@ -52,7 +56,7 @@ resource "aws_cloudwatch_log_group" "api_gw" {
 resource "aws_lambda_permission" "api_gw" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
-  function_name = module.bot_lambda.lambda_function_name
+  function_name = data.aws_lambda_function.existing.function_name
   principal     = "apigateway.amazonaws.com"
 
   source_arn = "${aws_apigatewayv2_api.lambda.execution_arn}/*/*"
