@@ -93,6 +93,12 @@ pipeline{
                 }
             }
         }
+
+        stage("CreateAPIgateway"){
+            steps{
+                sh './aws_create_api_gateway.sh'
+            }
+        }
         stage("Clean"){
             steps{
                 sh './clean.sh'
