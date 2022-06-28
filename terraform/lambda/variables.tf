@@ -12,3 +12,6 @@ variable "region" {
     type = string
     description = "region"
 }
+variable "lambda_function_name" {
+  type = string
+}
