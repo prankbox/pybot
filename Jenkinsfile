@@ -83,6 +83,7 @@ pipeline{
         stage("CreateLambdaFunction"){
             environment{
                         TF_VAR_image_tag = "$BUILD_TAG"
+                        TF_VAR_region = "$REGION"
                     }
             steps{
                 withCredentials([[
