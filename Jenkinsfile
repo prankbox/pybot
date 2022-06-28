@@ -5,6 +5,7 @@ pipeline{
         choice(name: "LAMBDA", choices: ["CREATE", "UPDATE"])
     }
     environment {
+        TF_VAR_token = credentials('bot-token')
         TELEGRAM_BOT_KEY = credentials('bot-token')
         AWS_ACCOUNT = "889527205817"
         REGION = "us-east-1"
@@ -28,6 +29,7 @@ pipeline{
         stage("Repo"){
             parallel{
                 stage("Create"){
+                    
                     when { expression { params.CREATE } }
                     steps{
                         withCredentials([[
@@ -79,7 +81,9 @@ pipeline{
         }
 
         stage("CreateLambdaFunction"){
-         
+            environment{
+                        TF_VAR_image_tag = $BUILD_TAG
+                    }
             steps{
                 withCredentials([[
                 $class: 'AmazonWebServicesCredentialsBinding',
