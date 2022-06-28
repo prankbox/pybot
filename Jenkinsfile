@@ -13,6 +13,7 @@ pipeline{
         ROLE_NAME="lambda-ex"
         AWS_ACCESS_KEY_ID = credentials("aws-id")
         AWS_SECRET_ACCESS_KEY = credentials("aws-key")
+        TF_VAR_region = "us-east-1"
     }
 
     stages{
@@ -41,17 +42,12 @@ pipeline{
                 sh 'scripts/aws_push_image.sh' 
             }
         }
-        stage("CreateLambdaRole"){
-            steps{
 
-                sh 'scripts/aws_create_lambda_role.sh'
-            }
-        }
 
         stage("CreateLambdaFunction"){
             environment{
                         TF_VAR_image_tag = "$BUILD_TAG"
-                        TF_VAR_region = "$REGION"
+
                     }
             steps{
 
