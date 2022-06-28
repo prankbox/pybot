@@ -20,7 +20,7 @@ pipeline{
 
         stage("Build"){
             steps{
-                sh './aws_build.sh'
+                sh 'scripts/aws_build.sh'
             }
         }
 
@@ -36,7 +36,7 @@ pipeline{
                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                     ]]) {
                             
-                            sh './aws_create_repo.sh'
+                            sh 'scripts/aws_create_repo.sh'
                         }
                     }
                 }
@@ -59,7 +59,7 @@ pipeline{
                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
             ]]) {
-                    sh './aws_push_image.sh'
+                    sh 'scripts/aws_push_image.sh'
                 }   
 
             }
@@ -72,7 +72,7 @@ pipeline{
                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
             ]]){
-                sh './aws_create_lambda_role.sh'
+                sh 'scripts/aws_create_lambda_role.sh'
             }
             }
         }
@@ -89,7 +89,7 @@ pipeline{
                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
             ]]) {
-                sh './aws_create_lambda_function.sh'
+                sh 'scripts/aws_create_lambda_function.sh'
                 }
             }
         }
@@ -105,14 +105,14 @@ pipeline{
                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
             ]]) {
-                sh './aws_create_api_gateway.sh'
+                sh 'scrtipts/aws_create_api_gateway.sh'
                 }
                
             }
         }
         stage("Clean"){
             steps{
-                sh './clean.sh'
+                sh 'scripts/clean.sh'
             }
         }
     }
