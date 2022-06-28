@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-cd && cd terraform
+cd && cd terraform/api
 terraform init
 terraform apply --auto-approve
 BASE_URL=$(terraform output -raw base_url)
