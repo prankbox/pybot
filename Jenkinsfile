@@ -5,7 +5,7 @@ pipeline{
         choice(name: "LAMBDA", choices: ["CREATE", "UPDATE"])
     }
     environment {
-        TF_VAR_lambda_funcion_name = "lambda-bot"
+        TF_VAR_lambda_function_name = "lambda-bot"
         TF_VAR_token = credentials('bot-token')
         TELEGRAM_BOT_KEY = credentials('bot-token')
         AWS_ACCOUNT = "889527205817"
