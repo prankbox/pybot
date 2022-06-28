@@ -6,7 +6,7 @@ pipeline{
     }
     environment {
         TELEGRAM_BOT_KEY = credentials('bot-token')
-        AWS_ACCOUNT = "148465220356"
+        AWS_ACCOUNT = "889527205817"
         REGION = "us-east-1"
         ROLE_NAME="lambda-ex"
     }
