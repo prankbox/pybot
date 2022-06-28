@@ -1,9 +1,6 @@
 pipeline{
     agent {label 'agent1'}
-    parameters {
-        booleanParam(name: "CREATE", defaultValue: false)
-        choice(name: "LAMBDA", choices: ["CREATE", "UPDATE"])
-    }
+
     environment {
         TF_VAR_lambda_function_name = "lambda-bot"
         TF_VAR_token = credentials('bot-token')
