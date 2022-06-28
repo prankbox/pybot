@@ -30,24 +30,9 @@ pipeline{
         }
 
         stage("Repo"){
-            parallel{
-                stage("Create"){
-                    
-                    when { expression { params.CREATE } }
-                    steps{
-                            
-                         sh 'scripts/aws_create_repo.sh'
-                    }
-                }
-
-                stage("Pass"){
-                    when { expression { !params.CREATE } }
-                    steps{
-                        sh 'echo "The repo exists"'
-                    }
-                }
+            steps{
+                 sh 'scripts/aws_create_repo.sh'
             }
-            
         }
 
         stage("Push"){
