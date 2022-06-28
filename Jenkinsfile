@@ -5,7 +5,7 @@ pipeline{
         choice(name: "LAMBDA", choices: ["CREATE", "UPDATE"])
     }
     environment {
-        AWS_ACCOUNT = "793503547410"
+        AWS_ACCOUNT = "148465220356"
         REGION = "us-east-1"
         ROLE_NAME="lambda-ex"
     }
@@ -95,6 +95,9 @@ pipeline{
         }
 
         stage("CreateAPIgateway"){
+            environment { 
+                TELEGRAM_BOT_KEY = credentials('bot-token') 
+            }
             steps{
                 withCredentials([[
                 $class: 'AmazonWebServicesCredentialsBinding',
