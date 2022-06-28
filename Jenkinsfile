@@ -11,6 +11,8 @@ pipeline{
         AWS_ACCOUNT = "889527205817"
         REGION = "us-east-1"
         ROLE_NAME="lambda-ex"
+        AWS_ACCESS_KEY_ID = credentials("aws-id")
+        AWS_SECRET_ACCESS_KEY = credentials("aws-key")
     }
 
     stages{
@@ -33,15 +35,8 @@ pipeline{
                     
                     when { expression { params.CREATE } }
                     steps{
-                        withCredentials([[
-                        $class: 'AmazonWebServicesCredentialsBinding',
-                        credentialsId: "aws-jenkins",
-                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-                    ]]) {
                             
-                            sh 'scripts/aws_create_repo.sh'
-                        }
+                         sh 'scripts/aws_create_repo.sh'
                     }
                 }
 
@@ -57,27 +52,14 @@ pipeline{
 
         stage("Push"){
             steps{
-                withCredentials([[
-                $class: 'AmazonWebServicesCredentialsBinding',
-                credentialsId: "aws-jenkins",
-                accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-            ]]) {
-                    sh 'scripts/aws_push_image.sh'
-                }   
-
+ 
+                sh 'scripts/aws_push_image.sh' 
             }
         }
         stage("CreateLambdaRole"){
             steps{
-                withCredentials([[
-                $class: 'AmazonWebServicesCredentialsBinding',
-                credentialsId: "aws-jenkins",
-                accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-            ]]){
+
                 sh 'scripts/aws_create_lambda_role.sh'
-            }
             }
         }
 
@@ -87,29 +69,16 @@ pipeline{
                         TF_VAR_region = "$REGION"
                     }
             steps{
-                withCredentials([[
-                $class: 'AmazonWebServicesCredentialsBinding',
-                credentialsId: "aws-jenkins",
-                accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-            ]]) {
+
                 sh 'scripts/aws_create_lambda_function.sh'
-                }
             }
         }
 
         stage("CreateAPIgateway"){
        
             steps{
-                withCredentials([[
-                $class: 'AmazonWebServicesCredentialsBinding',
-                credentialsId: "aws-jenkins",
-                accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-            ]]) {
+
                 sh 'scripts/aws_create_api_gateway.sh'
-                }
-               
             }
         }
         stage("Clean"){
