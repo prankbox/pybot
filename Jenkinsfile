@@ -2,6 +2,7 @@ pipeline{
     agent {label 'agent1'}
 
     environment {
+        TF_VAR_repo_name = "bot"
         TF_VAR_lambda_function_name = "lambda-bot"
         TF_VAR_token = credentials('bot-token')
         TF_VAR_region = "us-east-1"

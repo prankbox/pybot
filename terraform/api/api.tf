@@ -29,7 +29,7 @@ resource "aws_apigatewayv2_stage" "lambda" {
 }
 
 data "aws_lambda_function" "existing" {
-  function_name = "lambda-bot"
+  function_name = var.lambda_function_name
   //lambda_function_arn = var.lambda_function_arn
 }
 resource "aws_apigatewayv2_integration" "hello_world" {
