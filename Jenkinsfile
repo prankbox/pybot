@@ -25,9 +25,9 @@ pipeline{
         }
 
         stage("Repo"){
-            environment{
-                TF_VAR_repo_name = "bot"
-            }
+            // environment{
+            //     TF_VAR_repo_name = "bot"
+            // }
             steps{
                  sh 'scripts/aws_create_repo.sh'
             }
