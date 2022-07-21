@@ -6,7 +6,7 @@ pipeline{
         TF_VAR_lambda_function_name = "lambda-bot"
         TF_VAR_token = credentials('bot-token')
         TF_VAR_region = "us-east-1"
-        AWS_ACCOUNT = "889527205817"
+        AWS_ACCOUNT = "354469835278"
         AWS_ACCESS_KEY_ID = credentials("aws-id")
         AWS_SECRET_ACCESS_KEY = credentials("aws-key")
     }
